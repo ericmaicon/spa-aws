@@ -15,7 +15,7 @@ const SelectInput = ({
       placeholder={placeholder}
     >
       {data.map(item => (
-        <Option value={item.value}>item.label</Option>
+        <Option key={item.value} value={item.value}>{item.label}</Option>
       ))}
     </Select>
     {touched && (error && {error})}

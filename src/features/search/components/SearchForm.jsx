@@ -5,6 +5,7 @@ import { Field } from 'redux-form';
 import SearchInput from 'forms/SearchInput';
 import SelectInput from 'forms/SelectInput';
 import RateInput from 'forms/RateInput';
+import { GROUP_BY_DAY, GROUP_BY_WEEK, GROUP_BY_MONTH, SORT_BY_ASC, SORT_BY_DESC } from 'features/review/review';
 
 const rateArray = [
   {
@@ -29,8 +30,36 @@ const rateArray = [
   },
 ];
 
-const SearchForm = () => (
-  <form>
+const groupArray = [
+  {
+    value: GROUP_BY_DAY,
+    label: 'Day'
+  },
+  {
+    value: GROUP_BY_WEEK,
+    label: 'Week'
+  },
+  {
+    value: GROUP_BY_MONTH,
+    label: 'Month'
+  },
+];
+
+const sortArray = [
+  {
+    value: SORT_BY_ASC,
+    label: 'ASC'
+  },
+  {
+    value: SORT_BY_DESC,
+    label: 'DESC'
+  }
+];
+
+const SearchForm = ({
+  handleSearch
+}) => (
+  <form onSubmit={handleSearch}>
     <Row gutter={12} type='flex'>
       <Col span={6}>
         <Field
@@ -46,6 +75,7 @@ const SearchForm = () => (
           name='group_by'
           component={SelectInput}
           placeholder='Group by'
+          data={groupArray}
         />
       </Col>
       <Col className="gutter-row" span={3}>
@@ -53,6 +83,7 @@ const SearchForm = () => (
           name='order_by'
           component={SelectInput}
           placeholder='Order by'
+          data={sortArray}
         />
       </Col>
     </Row>
@@ -69,7 +100,12 @@ const SearchForm = () => (
     <Row gutter={12} type='flex'>
       <Col span={12}>
         <Row gutter={12} justify='end' type='flex'>
-          <Button type="primary">REFRESH</Button>
+          <Button
+            type="primary"
+            htmlType="submit"
+          >
+            REFRESH
+          </Button>
         </Row>
       </Col>
     </Row>
