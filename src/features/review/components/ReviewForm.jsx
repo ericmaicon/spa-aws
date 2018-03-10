@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
 import { Row, Col, Avatar } from 'antd';
 
-const ReviewForm = () => (
+const ReviewForm = ({
+  review
+}) => (
   <Fragment>
     <h2 className='review-title'>
       DECEMBER
@@ -11,20 +13,20 @@ const ReviewForm = () => (
         <Avatar shape="square" size="large" icon="user" />
         <div className='review-header-content'>
           <label>Date</label>
-          <p>12.12.2017</p>
+          <p>{review.reviewCreated}</p>
         </div>
         <div className='review-header-content'>
           <label>Stars</label>
-          <p>12.12.2017</p>
+          <p>{review.stars}</p>
         </div>
         <div className='review-header-content'>
-          <label>B016MO</label>
-          <p>Anker</p>
+          <label>{review.reviewId}</label>
+          <p>{review.authorId}</p>
         </div>
       </div>
       <div className='review-content'>
-        <h3>Review Title</h3>
-        <p>wqe ew qe wq qweqweqwe ewq ewq ewqe  eqweew q</p>
+        <h3>{review.title}</h3>
+        <p>{review.content}</p>
       </div>
     </div>
   </Fragment>
