@@ -1,0 +1,28 @@
+{
+  "name": "spa-aws",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "find ./node_modules/ -name '.babelrc' -exec rm {} \\;",
+    "start": "NODE_ENV=development parcel -p 8080 --no-cache src/index.html",
+    "prod": "NODE_ENV=production parcel build src/index.html --public-url /",
+    "eslint": "./node_modules/.bin/eslint ."
+  },
+  "dependencies": {
+    "antd": "^3.2.3",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
+    "redux": "^3.7.2"
+  },
+  "devDependencies": {
+    "babel-plugin-module-resolver": "^3.1.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^4.18.2",
+    "node-sass": "^4.7.2",
+    "parcel-bundler": "^1.6.2"
+  }
+}
