@@ -1,6 +1,16 @@
 import React from 'react';
-import { compose } from 'recompose';
+import { compose, withHandlers } from 'recompose';
+import { reduxForm } from 'redux-form';
 
 import SearchForm from './components/SearchForm';
 
-export default compose()(SearchForm);
+export default compose(
+  reduxForm({
+    form: 'searchForm'
+  }),
+  withHandlers({
+    handleSearch: ({ handleSubmit }) => handleSubmit(values => {
+      console.log(values);
+    })
+  })
+)(SearchForm);

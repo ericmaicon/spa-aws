@@ -1,0 +1,53 @@
+.ant-input-search {
+  .ant-input {
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    border: 1px solid $mainColor;
+
+    &::placeholder {
+      color: $mainColor;
+      padding-left: 10px;
+    }
+  }
+
+  .ant-input-suffix i {
+    color: $mainColor;
+  }
+}
+
+.ant-select-selection {
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+  border: 1px solid $mainColor;
+
+  .ant-select-selection__placeholder {
+    color: $mainColor;
+    padding-left: 10px;
+  }
+
+  .ant-select-arrow {
+    color: $mainColor;
+
+    &::before {
+      content: "\E606";
+    }
+  }
+}
+
+.ant-checkbox-wrapper {
+  color: $gray;
+  display: flex;
+  flex-direction: column;
+
+  .ant-checkbox-input {
+    border: 2px solid $mainColor;
+  }
+}
+
+label {
+  color: $gray;
+  display: flex;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}

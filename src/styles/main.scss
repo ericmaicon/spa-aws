@@ -1,1 +1,16 @@
 @import '../../node_modules/antd/dist/antd.css';
+
+@import 'vars';
+@import 'buttons';
+@import 'form';
+
+@import 'features/review';
+@import 'features/reviewList';
+
+body {
+  margin: 20px;
+
+  .ant-row-flex {
+    padding: 10px 0px;
+  }
+}

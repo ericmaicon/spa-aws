@@ -1,10 +1,14 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 
+import Review from 'features/review/Review';
+
 const ReviewListForm = () => (
-  <Row>
+  <Row gutter={12} type='flex' className='reviewList'>
     <Col span={12}>
-      oi
+      <Review />
+      <Review />
+      <Review />
     </Col>
   </Row>
 );
