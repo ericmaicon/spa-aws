@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose } from 'recompose';
+import { compose, setPropTypes } from 'recompose';
 import { reduxForm } from 'redux-form';
 
 import SearchForm from './components/SearchForm';
@@ -17,9 +18,12 @@ const mapStateToProps = (state) => {
 };
 
 export default compose(
+  setPropTypes({
+    handleSubmit: PropTypes.func,
+  }),
   connect(mapStateToProps, {}),
   reduxForm({
     form: 'searchForm',
     onSubmit
-  })
+  }),
 )(SearchForm);

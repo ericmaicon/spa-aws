@@ -1,5 +1,6 @@
 import React from 'react';
-import { compose, lifecycle, withHandlers } from 'recompose';
+import PropTypes from 'prop-types';
+import { compose, lifecycle, withHandlers, setPropTypes } from 'recompose';
 import { connect } from 'react-redux';
 
 import ReviewListForm from './components/ReviewListForm';
@@ -18,6 +19,9 @@ const mapDispatchToProps = {
 };
 
 export default compose(
+  setPropTypes({
+    review: PropTypes.object.isRequired,
+  }),
   connect(mapStateToProps, mapDispatchToProps),
   withHandlers({
     handleOnScroll: ({ fetchReviews, hasMore, page }) => () => {
