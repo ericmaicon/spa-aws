@@ -3,10 +3,13 @@ import { mount } from 'enzyme';
 
 import Review from './Review';
 
+const review = {
+};
+
 describe('Review', () => {
   const reviewList = () => {
     return mount(
-      <Review />
+      <Review review={review} />
     );
   };
 

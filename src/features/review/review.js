@@ -66,7 +66,7 @@ export function* fetchReviewsSaga() {
 
     if (response.status >= 200 && response.status < 300) {
       const reviewsResponse = parseReview(response.data.reviews);
-      const reviews = currentState.review.reviews.concat(reviewsResponse);
+      const reviews = _.getOr([], 'review.reviews', currentState).concat(reviewsResponse);
 
       yield put({
         type: FETCH_REVIEW_DONE,
@@ -106,7 +106,7 @@ export function* filterReviewsSaga() {
     const action = yield take(FILTER_REVIEWS);
     const searchObject = Object.assign({}, action.filter);
     const currentState = yield select();
-    let reviews = currentState.review.reviews;
+    let reviews = _.getOr([], 'review.reviews', currentState);
 
     //filter
     if (searchObject.search) {
@@ -149,7 +149,7 @@ export function* filterReviewsSaga() {
 /**
  * parse review, including new fields to be used on group by
  **/
-function parseReview(reviews) {
+export function parseReview(reviews) {
   return _.flow(
     _.map(review => {
       const date = moment.unix(review.created);
@@ -170,7 +170,7 @@ function parseReview(reviews) {
 /**
  * group reviews
  **/
-function groupBy(reviews, type) {
+export function groupBy(reviews, type) {
   return _.flow(
     _.sortBy(`${type}Sort`),
     _.groupBy(type)
