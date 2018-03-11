@@ -1,5 +1,7 @@
 # Simple React Amazon Review Page SPA
 
+[![Build Status](https://travis-ci.org/ericmaicon/spa-aws.svg?branch=master)](https://travis-ci.org/ericmaicon/spa-aws)
+
 This is a simple SPA with React. It uses:
 
 * React

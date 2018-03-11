@@ -19,9 +19,6 @@ const mapDispatchToProps = {
 };
 
 export default compose(
-  setPropTypes({
-    review: PropTypes.object.isRequired,
-  }),
   connect(mapStateToProps, mapDispatchToProps),
   withHandlers({
     handleOnScroll: ({ fetchReviews, hasMore, page }) => () => {
@@ -46,5 +43,8 @@ export default compose(
       const { handleOnScroll } = this.props;
       window.removeEventListener('scroll', handleOnScroll);
     },
-  })
+  }),
+  setPropTypes({
+    groupedReviews: PropTypes.object.isRequired,
+  }),
 )(ReviewListForm);
