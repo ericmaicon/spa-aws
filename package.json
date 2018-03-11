@@ -8,7 +8,8 @@
     "start": "NODE_ENV=development parcel -p 8080 --no-cache src/index.html",
     "eslint": "./node_modules/.bin/eslint . p -f table",
     "server": "node server.js",
-    "test": "NODE_ENV=test jest --verbose"
+    "test": "NODE_ENV=test jest --verbose",
+    "coverage": "NODE_ENV=test jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "dependencies": {
     "antd": "^3.2.3",
