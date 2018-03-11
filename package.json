@@ -9,7 +9,7 @@
     "eslint": "./node_modules/.bin/eslint . p -f table",
     "server": "node server.js",
     "test": "NODE_ENV=test ./node_modules/.bin/jest --verbose",
-    "coverage": "NODE_ENV=test ./node_modules/.bin/jest --coverage && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
+    "coverage": "NODE_ENV=test ./node_modules/.bin/jest --coverage && cat ./coverage/lcov.info"
   },
   "dependencies": {
     "antd": "^3.2.3",
