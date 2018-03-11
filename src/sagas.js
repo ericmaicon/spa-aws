@@ -1,9 +1,9 @@
-import { all, fork } from 'redux-saga/effects';
+  import { all, fork } from 'redux-saga/effects';
 
-import { fetchReviewsSaga } from 'features/review/review';
+import { fetchReviewsSaga, filterReviewsSaga } from 'features/review/review';
 
 const sagas = [
-  fetchReviewsSaga
+  fetchReviewsSaga, filterReviewsSaga
 ];
 
 export default function* rootSaga() {

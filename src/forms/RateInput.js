@@ -1,26 +1,82 @@
-import React, { Fragment } from 'react';
-import { Checkbox, Row, Col, Icon } from 'antd';
+import React, { Fragment, Component } from 'react';
+import { Row, Col, Icon } from 'antd';
 
-const CheckboxInput = ({
-  input,
-  data = [],
-  placeholder,
-  meta: { touched, error }
+const Checkbox = ({
+  value,
+  onChange,
+  checked = false
 }) => (
-  <Fragment>
-    <Checkbox.Group onChange={input.onChange}>
-      <Row>
-        {data.map(item => (
-          <Col key={item.value} span={8}>
-            <Checkbox value={item.value}>
-              {item.label} <Icon type='star' />
-            </Checkbox>
-          </Col>
-        ))}
-      </Row>
-    </Checkbox.Group>
-    {touched && (error && {error})}
-  </Fragment>
+  <div className="rate-input-container">
+    <div className="rate-input">
+      <input
+        type="checkbox"
+        value={value}
+        id={value}
+        checked={checked}
+        onChange={onChange}
+      />
+      <label htmlFor={value}></label>
+    </div>
+    <label className='rate-input-label'>{value}</label>
+    <Icon type="star" />
+  </div>
 );
 
-export default CheckboxInput;
+export default class CheckboxInput extends Component {
+  handleChange = (e) => {
+    const { input } = this.props;
+
+    input.onChange(e.target.value);
+  }
+
+  render() {
+    const {
+      input,
+      placeholder,
+      meta: { touched, error }
+    } = this.props;
+
+    return (
+      <Fragment>
+        <Row gutter={12} type='flex'>
+          <Col span={4}>
+            <Checkbox
+              value={1}
+              onChange={this.handleChange}
+              checked={input.value >= 1}
+            />
+          </Col>
+          <Col span={4}>
+            <Checkbox
+              value={2}
+              onChange={this.handleChange}
+              checked={input.value >= 2}
+            />
+          </Col>
+          <Col span={4}>
+            <Checkbox
+              value={3}
+              onChange={this.handleChange}
+              checked={input.value >= 3}
+            />
+          </Col>
+          <Col span={4}>
+            <Checkbox
+              value={4}
+              onChange={this.handleChange}
+              checked={input.value >= 4}
+            />
+          </Col>
+          <Col span={4}>
+            <Checkbox
+              value={5}
+              onChange={this.handleChange}
+              checked={input.value >= 5}
+            />
+          </Col>
+        </Row>
+        {touched && (error && {error})}
+      </Fragment>
+    );
+  }
+}

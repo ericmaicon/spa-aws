@@ -3,9 +3,11 @@
 @import 'vars';
 @import 'buttons';
 @import 'form';
+@import 'rateInput';
 
 @import 'features/review';
 @import 'features/reviewList';
+@import 'features/search';
 
 body {
   margin: 20px;
@@ -13,4 +15,8 @@ body {
   .ant-row-flex {
     padding: 10px 0px;
   }
+}
+
+.text-right {
+  text-align: right;
 }

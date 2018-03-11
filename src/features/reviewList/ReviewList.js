@@ -7,7 +7,7 @@ import { fetchReviews } from 'features/review/review';
 
 const mapStateToProps = (state) => {
   return {
-    reviews: state.review.reviews,
+    groupedReviews: state.review.groupedReviews,
     hasMore: state.review.hasMore,
     page: state.review.page
   };

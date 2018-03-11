@@ -1,33 +1,49 @@
+import _ from 'lodash/fp';
 import axios from 'axios';
+import moment from 'moment';
+import { submit } from 'redux-form';
 import { take, call, put, select } from 'redux-saga/effects';
 
 export const FETCH_REVIEW = 'review/fetch';
 export const FETCH_REVIEW_DONE = `${FETCH_REVIEW}/done`;
 export const FETCH_REVIEW_FAIL = `${FETCH_REVIEW}/fail`;
 
-export const GROUP_BY = 'review/groupBy';
-export const GROUP_BY_DAY = 'review/groupBy/day';
-export const GROUP_BY_WEEK = 'review/groupBy/week';
-export const GROUP_BY_MONTH = 'review/groupBy/month';
+export const FILTER_REVIEWS = 'review/filter';
+export const FILTER_REVIEWS_DONE = `${FILTER_REVIEWS}/done`;
 
-export const SORT_BY = 'review/sortBy';
-export const SORT_BY_DESC = 'review/sortBy/desc';
-export const SORT_BY_ASC = 'review/sortBy/asc';
+export const GROUP_BY_DAY = 'day';
+export const GROUP_BY_WEEK = 'week';
+export const GROUP_BY_MONTH = 'month';
 
-export function reviewReducer(state = { reviews: [], hasMore: false }, action) {
+export const SORT_BY_DESC = 'desc';
+export const SORT_BY_ASC = 'asc';
+
+/**
+ * reducer
+ **/
+export function reviewReducer(state = { groupedReviews: {}, reviews: [], hasMore: false }, action) {
   switch (action.type) {
   case FETCH_REVIEW_DONE:
     return {
+      ...state,
       reviews: action.response.reviews,
       hasMore: action.response.hasMore,
       page: action.payload.page
     };
     break;
+  case FILTER_REVIEWS_DONE:
+    return {
+      ...state,
+      groupedReviews: action.response
+    };
   default:
     return state;
   }
 }
 
+/**
+ * action to fetch reviews
+ **/
 export function fetchReviews(page = 1) {
   return {
     type: FETCH_REVIEW,
@@ -35,6 +51,9 @@ export function fetchReviews(page = 1) {
   };
 };
 
+/**
+ * saga to actually hit the api and treat the result
+ **/
 export function* fetchReviewsSaga() {
   while(true) {
     const action = yield take(FETCH_REVIEW);
@@ -46,7 +65,8 @@ export function* fetchReviewsSaga() {
     });
 
     if (response.status >= 200 && response.status < 300) {
-      const reviews = currentState.review.reviews.concat(response.data.reviews);
+      const reviewsResponse = parseReview(response.data.reviews);
+      const reviews = currentState.review.reviews.concat(reviewsResponse);
 
       yield put({
         type: FETCH_REVIEW_DONE,
@@ -63,29 +83,96 @@ export function* fetchReviewsSaga() {
         payload: action
       });
     }
+
+    yield put(submit('searchForm'));
   }
 };
 
-export function groupBy(type = GROUP_BY_DAY) {
+/**
+ * action to filter reviews
+ **/
+export function filterReviews(filter) {
   return {
-    type: GROUP_BY,
-    type
+    type: FILTER_REVIEWS,
+    filter
   };
 };
 
-export function* groupBySaga() {
+/**
+ * saga to filter the reviews
+ **/
+export function* filterReviewsSaga() {
   while(true) {
-    const action = yield take(GROUP_BY);
+    const action = yield take(FILTER_REVIEWS);
+    const searchObject = Object.assign({}, action.filter);
     const currentState = yield select();
+    let reviews = currentState.review.reviews;
 
-    console.log(currentState.review.reviews);
-
-    switch(action.type) {
-    case GROUP_BY_DAY:
-
-    case GROUP_BY_WEEK:
-
-    case GROUP_BY_MONTH:
+    //filter
+    if (searchObject.search) {
+      reviews = reviews.filter(review => {
+        return review.content.toLowerCase().indexOf(searchObject.search.toLowerCase()) > -1;
+      });
     }
+
+    //filter rate
+    if (searchObject.rate) {
+      reviews = reviews.filter(review => {
+        return review.stars == searchObject.rate;
+      });
+    }
+
+    //order by
+    if (searchObject.order_by === SORT_BY_DESC) {
+      reviews = reviews.sort((a, b) => {
+        return new Date(b.created*1000) - new Date(a.created*1000);
+      });
+    } else {
+      reviews = reviews.sort((a, b) => {
+        return new Date(a.created*1000) - new Date(b.created*1000);
+      });
+    }
+
+    //group
+    if (!searchObject.group_by) {
+      searchObject.group_by = GROUP_BY_MONTH;
+    }
+    reviews = groupBy(reviews, searchObject.group_by);
+
+    yield put({
+      type: FILTER_REVIEWS_DONE,
+      response: reviews
+    });
   }
 };
+
+/**
+ * parse review, including new fields to be used on group by
+ **/
+function parseReview(reviews) {
+  return _.flow(
+    _.map(review => {
+      const date = moment.unix(review.created);
+      return {
+        ...review,
+        formatDate: date.format('DD.MM.YYYY'),
+        week: `${date.startOf('week').format('DD.MM')} - ${date.endOf('week').format('DD.MM')}`,
+        weekSort: date.format('w'),
+        month: date.format('MMMM'),
+        monthSort: date.format('MM'),
+        day: date.format('DD.MM.YYYY'),
+        daySort: date.format('YYYYMMDD'),
+      };
+    }),
+  )(reviews);
+}
+
+/**
+ * group reviews
+ **/
+function groupBy(reviews, type) {
+  return _.flow(
+    _.sortBy(`${type}Sort`),
+    _.groupBy(type)
+  )(reviews);
+}

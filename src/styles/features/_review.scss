@@ -2,7 +2,6 @@
   color: $gray;
   font-size: 18px;
   font-weight: bold;
-  margin-top: 50px;
   margin-bottom: 10px;
 }
 
@@ -10,6 +9,7 @@
   -webkit-border-radius: 15px;
   border-radius: 15px;
   border: 1px solid $gray;
+  margin: 20px 0px;
   padding: 30px;
 
   .review-header {

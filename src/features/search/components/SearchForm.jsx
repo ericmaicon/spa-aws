@@ -5,61 +5,12 @@ import { Field } from 'redux-form';
 import SearchInput from 'forms/SearchInput';
 import SelectInput from 'forms/SelectInput';
 import RateInput from 'forms/RateInput';
-import { GROUP_BY_DAY, GROUP_BY_WEEK, GROUP_BY_MONTH, SORT_BY_ASC, SORT_BY_DESC } from 'features/review/review';
-
-const rateArray = [
-  {
-    value: 1,
-    label: 1
-  },
-  {
-    value: 2,
-    label: 2
-  },
-  {
-    value: 3,
-    label: 3
-  },
-  {
-    value: 4,
-    label: 4
-  },
-  {
-    value: 5,
-    label:5
-  },
-];
-
-const groupArray = [
-  {
-    value: GROUP_BY_DAY,
-    label: 'Day'
-  },
-  {
-    value: GROUP_BY_WEEK,
-    label: 'Week'
-  },
-  {
-    value: GROUP_BY_MONTH,
-    label: 'Month'
-  },
-];
-
-const sortArray = [
-  {
-    value: SORT_BY_ASC,
-    label: 'ASC'
-  },
-  {
-    value: SORT_BY_DESC,
-    label: 'DESC'
-  }
-];
+import { groupArray, sortArray } from '../search';
 
 const SearchForm = ({
-  handleSearch
+  handleSubmit
 }) => (
-  <form onSubmit={handleSearch}>
+  <form onSubmit={handleSubmit} className='search'>
     <Row gutter={12} type='flex'>
       <Col span={6}>
         <Field
@@ -92,21 +43,18 @@ const SearchForm = ({
         <label>Filter by:</label>
         <Field
           name='rate'
-          data={rateArray}
           component={RateInput}
         />
       </Col>
     </Row>
     <Row gutter={12} type='flex'>
-      <Col span={12}>
-        <Row gutter={12} justify='end' type='flex'>
-          <Button
-            type="primary"
-            htmlType="submit"
-          >
-            REFRESH
-          </Button>
-        </Row>
+      <Col span={12} className='text-right'>
+        <Button
+          type="primary"
+          htmlType="submit"
+        >
+          REFRESH
+        </Button>
       </Col>
     </Row>
   </form>
