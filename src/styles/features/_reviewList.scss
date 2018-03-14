@@ -1,4 +1,8 @@
 .reviewList {
-  margin-top: -50px;
   z-index: -1;
+
+  @media (min-width: 600px) {
+    clear: both;
+    margin-top: -50px;
+  }
 }

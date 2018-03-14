@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import ReviewList from './ReviewList';
+import ReviewListContainer from './ReviewListContainer';
 
 const mockStore = configureStore([]);
 const store = mockStore({
@@ -16,7 +16,7 @@ describe('ReviewList', () => {
   const reviewList = () => {
     return mount(
       <Provider store={store}>
-        <ReviewList />
+        <ReviewListContainer />
       </Provider>
     );
   };

@@ -38,36 +38,36 @@ export default class CheckboxInput extends Component {
 
     return (
       <Fragment>
-        <Row gutter={12} type='flex'>
-          <Col span={4}>
+        <Row>
+          <Col xs={12} lg={4}>
             <Checkbox
               value={1}
               onChange={this.handleChange}
               checked={input.value >= 1}
             />
           </Col>
-          <Col span={4}>
+          <Col xs={12} lg={4}>
             <Checkbox
               value={2}
               onChange={this.handleChange}
               checked={input.value >= 2}
             />
           </Col>
-          <Col span={4}>
+          <Col xs={12} lg={4}>
             <Checkbox
               value={3}
               onChange={this.handleChange}
               checked={input.value >= 3}
             />
           </Col>
-          <Col span={4}>
+          <Col xs={12} lg={4}>
             <Checkbox
               value={4}
               onChange={this.handleChange}
               checked={input.value >= 4}
             />
           </Col>
-          <Col span={4}>
+          <Col xs={12} lg={4}>
             <Checkbox
               value={5}
               onChange={this.handleChange}

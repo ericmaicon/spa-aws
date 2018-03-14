@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import Review from './Review';
+import ReviewContainer from './ReviewContainer';
 
 const review = {
 };
@@ -9,7 +9,7 @@ const review = {
 describe('Review', () => {
   const reviewList = () => {
     return mount(
-      <Review review={review} />
+      <ReviewContainer review={review} />
     );
   };
 

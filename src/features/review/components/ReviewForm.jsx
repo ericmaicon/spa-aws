@@ -6,13 +6,15 @@ const ReviewForm = ({
   review
 }) => (
   <div className='review'>
-    <div className='review-header'>
-      <Avatar shape="square" size="large" icon="user" />
-      <div className='review-header-content'>
+    <Row gutter={8} className='review-header'>
+      <Col lg={6} xs={24} md={24}>
+        <Avatar shape="square" size="large" icon="user" />
+      </Col>
+      <Col lg={6} xs={24} md={24}>
         <label>Date</label>
         <p>{review.formatDate}</p>
-      </div>
-      <div className='review-header-content'>
+      </Col>
+      <Col lg={6} xs={24} md={24}>
         <label>Stars</label>
         <p>
           {_.range(review.stars).map(star => (
@@ -22,12 +24,12 @@ const ReviewForm = ({
             <Icon type='star-o' key={star} />
           ))}
         </p>
-      </div>
-      <div className='review-header-content'>
+      </Col>
+      <Col lg={6} xs={24} md={24}>
         <label>{review.reviewId}</label>
         <p>{review.authorId}</p>
-      </div>
-    </div>
+      </Col>
+    </Row>
     <div className='review-content'>
       <h3>{review.title}</h3>
       <p>{review.content}</p>

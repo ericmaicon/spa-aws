@@ -1,28 +1,32 @@
 import React, { Fragment } from 'react';
 import { Row, Col, Alert } from 'antd';
 
-import Review from 'features/review/Review';
+import ReviewContainer from 'features/review/ReviewContainer';
 
 const ReviewListForm = ({
   groupedReviews
 }) => (
   <Fragment>
     {Object.keys(groupedReviews).length === 0 && (
-      <Row gutter={12}>
-        <Col span={12}>
+      <Row gutter={8}>
+        <Col lg={12} xs={24} md={24}>
           <Alert message="There is no review with the selected filter" type="error" />
         </Col>
       </Row>
     )}
 
-    <Row type='flex' gutter={12} className='reviewList'>
-      <Col span={12}>
+    <Row gutter={8} className='reviewList'>
+      <Col lg={12} xs={24} md={24}>
         {Object.keys(groupedReviews).map(key => (
           <Fragment key={key}>
             <h2 className='review-title'>
               {key}
             </h2>
-            {groupedReviews[key].map(review => <Review key={review.reviewId} review={review} />)}
+            <Row gutter={8}>
+              <Col>
+                {groupedReviews[key].map(review => <ReviewContainer key={review.reviewId} review={review} />)}
+              </Col>
+            </Row>
           </Fragment>
         ))}
       </Col>

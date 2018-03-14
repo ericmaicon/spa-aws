@@ -9,12 +9,8 @@
 @import 'features/reviewList';
 @import 'features/search';
 
-body {
-  margin: 20px;
-
-  .ant-row-flex {
-    padding: 10px 0px;
-  }
+#app {
+  padding: 30px;
 }
 
 .text-right {
