@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Provider } from 'react-redux';
 
-import Search from 'features/search/Search';
+import SearchContainer from 'features/search/SearchContainer';
 import ReviewList from 'features/reviewList/ReviewList';
 
 import store from 'appStore';
@@ -9,10 +9,10 @@ import 'styles/main.scss';
 
 const AppForm = () => (
   <Provider store={store()}>
-    <div>
-      <Search />
+    <Fragment>
+      <SearchContainer />
       <ReviewList />
-    </div>
+    </Fragment>
   </Provider>
 );
 

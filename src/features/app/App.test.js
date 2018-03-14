@@ -1,12 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import App from './components/App';
+import AppForm from './components/AppForm';
 
 describe('App', () => {
   const app = () => {
     return mount(
-      <App />
+      <AppForm />
     );
   };
 

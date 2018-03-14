@@ -3,17 +3,17 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import Search from './Search';
+import SearchContainer from './SearchContainer';
 
 const mockStore = configureStore([]);
 const store = mockStore({
 });
 
-describe('Search', () => {
+describe('SearchContainer', () => {
   const search = () => {
     return mount(
       <Provider store={store}>
-        <Search />
+        <SearchContainer />
       </Provider>
     );
   };

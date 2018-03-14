@@ -2,6 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'babel-polyfill';
 
-import App from 'features/app/components/App';
+import AppForm from 'features/app/components/AppForm';
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<AppForm />, document.getElementById('app'));
