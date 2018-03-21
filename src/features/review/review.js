@@ -125,11 +125,11 @@ export function* filterReviewsSaga() {
     //order by
     if (searchObject.order_by === SORT_BY_DESC) {
       reviews = reviews.sort((a, b) => {
-        return new Date(b.created*1000) - new Date(a.created*1000);
+        return new Date(b.created/1000) - new Date(a.created/1000);
       });
     } else {
       reviews = reviews.sort((a, b) => {
-        return new Date(a.created*1000) - new Date(b.created*1000);
+        return new Date(a.created/1000) - new Date(b.created/1000);
       });
     }
 
@@ -152,7 +152,7 @@ export function* filterReviewsSaga() {
 export function parseReview(reviews) {
   return _.flow(
     _.map(review => {
-      const date = moment.unix(review.created);
+      const date = moment.unix(review.created/1000);
       return {
         ...review,
         formatDate: date.format('DD.MM.YYYY'),
