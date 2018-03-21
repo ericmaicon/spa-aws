@@ -118,7 +118,7 @@ export function* filterReviewsSaga() {
     //filter rate
     if (searchObject.rate) {
       reviews = reviews.filter(review => {
-        return review.stars == searchObject.rate;
+        return review.stars <= searchObject.rate;
       });
     }
 
