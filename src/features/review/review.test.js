@@ -53,8 +53,6 @@ describe('review', () => {
     }];
     const match = [{
       'created': 1517389316000,
-      'day': '31.01.2018',
-      'daySort': '20180131',
       'formatDate': '31.01.2018',
     }];
     expect(parseReview(reviews)).toEqual(match);

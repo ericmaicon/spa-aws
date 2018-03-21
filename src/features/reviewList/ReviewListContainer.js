@@ -8,7 +8,7 @@ import { fetchReviews } from 'features/review/review';
 
 const mapStateToProps = (state) => {
   return {
-    parsedReviews: state.review.parsedReviews,
+    reviews: state.review.reviews,
     hasMore: state.review.hasMore,
     page: state.review.page
   };
@@ -45,6 +45,6 @@ export default compose(
     },
   }),
   setPropTypes({
-    parsedReviews: PropTypes.array.isRequired,
+    reviews: PropTypes.array.isRequired,
   }),
 )(ReviewListForm);

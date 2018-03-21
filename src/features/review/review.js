@@ -1,7 +1,6 @@
 import _ from 'lodash/fp';
 import axios from 'axios';
 import moment from 'moment';
-import { submit } from 'redux-form';
 import { take, call, put, select } from 'redux-saga/effects';
 
 export const FETCH_REVIEW = 'review/fetch';
@@ -17,7 +16,7 @@ export const SORT_BY_ASC = 'asc';
 /**
  * reducer
  **/
-export function reviewReducer(state = { parsedReviews: [], reviews: [], hasMore: false }, action) {
+export function reviewReducer(state = { reviews: [], hasMore: false }, action) {
   switch (action.type) {
   case FETCH_REVIEW_DONE:
     return {
@@ -30,7 +29,7 @@ export function reviewReducer(state = { parsedReviews: [], reviews: [], hasMore:
   case FILTER_REVIEWS_DONE:
     return {
       ...state,
-      parsedReviews: action.response
+      reviews: action.response
     };
   default:
     return state;
@@ -79,8 +78,6 @@ export function* fetchReviewsSaga() {
         payload: action
       });
     }
-
-    yield put(submit('searchForm'));
   }
 };
 
@@ -147,8 +144,6 @@ export function parseReview(reviews) {
       return {
         ...review,
         formatDate: date.format('DD.MM.YYYY'),
-        day: date.format('DD.MM.YYYY'),
-        daySort: date.format('YYYYMMDD'),
       };
     }),
   )(reviews);
