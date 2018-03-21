@@ -1,20 +1,5 @@
 
-import { GROUP_BY_DAY, GROUP_BY_WEEK, GROUP_BY_MONTH, SORT_BY_ASC, SORT_BY_DESC } from 'features/review/review';
-
-export const groupArray = [
-  {
-    value: GROUP_BY_DAY,
-    label: 'Day'
-  },
-  {
-    value: GROUP_BY_WEEK,
-    label: 'Week'
-  },
-  {
-    value: GROUP_BY_MONTH,
-    label: 'Month'
-  },
-];
+import { SORT_BY_ASC, SORT_BY_DESC } from 'features/review/review';
 
 export const sortArray = [
   {

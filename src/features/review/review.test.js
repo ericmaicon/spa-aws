@@ -41,7 +41,7 @@ describe('review', () => {
     return expectSaga(filterReviewsSaga)
       .put({
         type: FILTER_REVIEWS_DONE,
-        response: {}
+        response: []
       })
       .dispatch(filterReviews())
       .run();
@@ -53,40 +53,10 @@ describe('review', () => {
     }];
     const match = [{
       'created': 1517389316000,
-      'day': '28.02.50054',
-      'daySort': '500540228',
-      'formatDate': '25.02.50054',
-      'month': 'February',
-      'monthSort': '02',
-      'week': '22.02 - 28.02',
-      'weekSort': '9',
+      'day': '31.01.2018',
+      'daySort': '20180131',
+      'formatDate': '31.01.2018',
     }];
     expect(parseReview(reviews)).toEqual(match);
-  });
-
-  it('should group reviews', () => {
-    const reviews = [{
-      'created': 1517389316000,
-      'day': '28.02.50054',
-      'daySort': '500540228',
-      'formatDate': '25.02.50054',
-      'month': 'February',
-      'monthSort': '02',
-      'week': '22.02 - 28.02',
-      'weekSort': '9',
-    }];
-    const match = {
-      '28.02.50054': [{
-        'created': 1517389316000,
-        'day': '28.02.50054',
-        'daySort': '500540228',
-        'formatDate': '25.02.50054',
-        'month': 'February',
-        'monthSort': '02',
-        'week': '22.02 - 28.02',
-        'weekSort': '9',
-      },
-      ]};
-    expect(groupBy(reviews, 'day')).toEqual(match);
   });
 });

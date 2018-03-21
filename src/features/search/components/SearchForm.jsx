@@ -23,24 +23,12 @@ const SearchForm = ({
           />
         </FormItem>
         <FormItem>
-          <Row gutter={8}>
-            <Col span={12}>
-              <Field
-                name='group_by'
-                component={SelectInput}
-                placeholder='Group by'
-                data={groupArray}
-              />
-            </Col>
-            <Col span={12}>
-              <Field
-                name='order_by'
-                component={SelectInput}
-                placeholder='Order by'
-                data={sortArray}
-              />
-            </Col>
-          </Row>
+          <Field
+            name='order_by'
+            component={SelectInput}
+            placeholder='Order by'
+            data={sortArray}
+          />
         </FormItem>
         <FormItem>
           <label>Filter by:</label>

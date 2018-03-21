@@ -8,7 +8,7 @@ import ReviewListContainer from './ReviewListContainer';
 const mockStore = configureStore([]);
 const store = mockStore({
   review: {
-    groupedReviews: {}
+    parsedReviews: [] 
   }
 });
 

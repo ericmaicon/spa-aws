@@ -14,8 +14,8 @@ const SelectInput = ({
       onChange={input.onChange}
       placeholder={placeholder}
     >
-      {data.map(item => (
-        <Option key={item.value} value={item.value}>{item.label}</Option>
+      {data.map((item, key) => (
+        <Option key={key} value={item.value}>{item.label}</Option>
       ))}
     </Select>
     {touched && (error && {error})}

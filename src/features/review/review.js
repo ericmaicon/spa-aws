@@ -11,17 +11,13 @@ export const FETCH_REVIEW_FAIL = `${FETCH_REVIEW}/fail`;
 export const FILTER_REVIEWS = 'review/filter';
 export const FILTER_REVIEWS_DONE = `${FILTER_REVIEWS}/done`;
 
-export const GROUP_BY_DAY = 'day';
-export const GROUP_BY_WEEK = 'week';
-export const GROUP_BY_MONTH = 'month';
-
 export const SORT_BY_DESC = 'desc';
 export const SORT_BY_ASC = 'asc';
 
 /**
  * reducer
  **/
-export function reviewReducer(state = { groupedReviews: {}, reviews: [], hasMore: false }, action) {
+export function reviewReducer(state = { parsedReviews: [], reviews: [], hasMore: false }, action) {
   switch (action.type) {
   case FETCH_REVIEW_DONE:
     return {
@@ -34,7 +30,7 @@ export function reviewReducer(state = { groupedReviews: {}, reviews: [], hasMore
   case FILTER_REVIEWS_DONE:
     return {
       ...state,
-      groupedReviews: action.response
+      parsedReviews: action.response
     };
   default:
     return state;
@@ -133,12 +129,6 @@ export function* filterReviewsSaga() {
       });
     }
 
-    //group
-    if (!searchObject.group_by) {
-      searchObject.group_by = GROUP_BY_MONTH;
-    }
-    reviews = groupBy(reviews, searchObject.group_by);
-
     yield put({
       type: FILTER_REVIEWS_DONE,
       response: reviews
@@ -156,23 +146,9 @@ export function parseReview(reviews) {
       return {
         ...review,
         formatDate: date.format('DD.MM.YYYY'),
-        week: `${date.startOf('week').format('DD.MM')} - ${date.endOf('week').format('DD.MM')}`,
-        weekSort: date.format('w'),
-        month: date.format('MMMM'),
-        monthSort: date.format('MM'),
         day: date.format('DD.MM.YYYY'),
         daySort: date.format('YYYYMMDD'),
       };
     }),
-  )(reviews);
-}
-
-/**
- * group reviews
- **/
-export function groupBy(reviews, type) {
-  return _.flow(
-    _.sortBy(`${type}Sort`),
-    _.groupBy(type)
   )(reviews);
 }
