@@ -107,7 +107,8 @@ export function* filterReviewsSaga() {
     //filter
     if (searchObject.search) {
       reviews = reviews.filter(review => {
-        return review.content.toLowerCase().indexOf(searchObject.search.toLowerCase()) > -1;
+        return review.content.toLowerCase().indexOf(searchObject.search.toLowerCase()) > -1 ||
+          review.title.toLowerCase().indexOf(searchObject.search.toLowerCase()) > -1;
       });
     }
 
