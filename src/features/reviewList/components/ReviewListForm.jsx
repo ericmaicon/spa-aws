@@ -1,11 +1,13 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Alert } from 'antd';
+import { Row, Col, Alert, Icon } from 'antd';
 
 import ReviewContainer from 'features/review/ReviewContainer';
 
 const ReviewListForm = ({
-  parsedReviews
+  parsedReviews,
+  showLoader,
+  hasMore,
 }) => (
   <Fragment>
     {Object.keys(parsedReviews).length === 0 && (
@@ -25,13 +27,21 @@ const ReviewListForm = ({
             </Col>
           </Row>
         ))}
+
+        <div className='text-center'>
+          {hasMore && showLoader && (
+            <Icon type="loading" />
+          )}
+        </div>
       </Col>
     </Row>
   </Fragment>
 );
 
 ReviewListForm.propTypes = {
-  parsedReviews: PropTypes.arrayOf(PropTypes.object).isRequired
+  parsedReviews: PropTypes.arrayOf(PropTypes.object).isRequired,
+  showLoader: PropTypes.bool.isRequired,
+  hasMore: PropTypes.bool.isRequired,
 };
 
 

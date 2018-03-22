@@ -7,7 +7,8 @@ import ReviewListForm from './components/ReviewListForm';
 const mapStateToProps = (state) => ({
   parsedReviews: state.review.parsedReviews,
   hasMore: state.review.hasMore,
-  page: state.review.page
+  page: state.review.page,
+  showLoader: state.loader.showLoader
 });
 
 const mapDispatchToProps = {

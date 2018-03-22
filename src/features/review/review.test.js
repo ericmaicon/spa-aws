@@ -3,6 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { expectSaga } from 'redux-saga-test-plan';
 import expect from 'expect';
 
+import { SHOW_LOADER, HIDE_LOADER } from 'features/loader/loader';
 import {
   fetchReviews,
   fetchReviewsSaga,
@@ -22,6 +23,9 @@ describe('review', () => {
     mock.onGet('http://localhost:3333/?page=1').reply(200, []);
     return expectSaga(fetchReviewsSaga)
       .put({
+        type: SHOW_LOADER
+      })
+      .put({
         type: FETCH_REVIEW_DONE,
         response: {
           reviews: []
@@ -30,6 +34,9 @@ describe('review', () => {
           type: FETCH_REVIEW,
           page: 1
         }
+      })
+      .put({
+        type: HIDE_LOADER
       })
       .dispatch(fetchReviews())
       .run();

@@ -9,7 +9,12 @@ import ReviewListContainer from './ReviewListContainer';
 const mockStore = configureStore([]);
 const store = mockStore({
   review: {
-    reviews: []
+    reviews: [],
+    parsedReviews: [],
+    hasMore: false
+  },
+  loader: {
+    showLoader: false
   }
 });
 

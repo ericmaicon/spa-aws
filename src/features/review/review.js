@@ -3,6 +3,8 @@ import axios from 'axios';
 import moment from 'moment';
 import { take, call, put, select } from 'redux-saga/effects';
 
+import { showLoader, hideLoader } from 'features/loader/loader';
+
 export const FETCH_REVIEW = 'review/fetch';
 export const FETCH_REVIEW_DONE = `${FETCH_REVIEW}/done`;
 export const FETCH_REVIEW_FAIL = `${FETCH_REVIEW}/fail`;
@@ -67,6 +69,7 @@ export function parseReview(reviews) {
 export function* fetchReviewsSaga() {
   while(true) {
     const action = yield take(FETCH_REVIEW);
+    yield put(showLoader());
     const currentState = yield select();
     const response = yield call(axios, {
       url: `http://localhost:3333/?page=${action.page}`,
@@ -93,6 +96,7 @@ export function* fetchReviewsSaga() {
         payload: action
       });
     }
+    yield put(hideLoader());
   }
 };
 
