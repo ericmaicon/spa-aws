@@ -15,21 +15,21 @@ export const SORT_BY_ASC = 'asc';
 
 /**
  * reducer
- **/
-export function reviewReducer(state = { reviews: [], hasMore: false }, action) {
+ */
+export function reviewReducer(state = { parsedReviews: [], hasMore: false }, action) {
   switch (action.type) {
   case FETCH_REVIEW_DONE:
     return {
       ...state,
       reviews: action.response.reviews,
       hasMore: action.response.hasMore,
+      parsedReviews: action.response.reviews,
       page: action.payload.page
     };
-    break;
   case FILTER_REVIEWS_DONE:
     return {
       ...state,
-      reviews: action.response
+      parsedReviews: action.response
     };
   default:
     return state;
@@ -38,7 +38,7 @@ export function reviewReducer(state = { reviews: [], hasMore: false }, action) {
 
 /**
  * action to fetch reviews
- **/
+ */
 export function fetchReviews(page = 1) {
   return {
     type: FETCH_REVIEW,
@@ -47,8 +47,23 @@ export function fetchReviews(page = 1) {
 };
 
 /**
+ * parse review, including new fields to be used on group by
+ */
+export function parseReview(reviews) {
+  return _.flow(
+    _.map(review => {
+      const date = moment.unix(review.created/1000);
+      return {
+        ...review,
+        formatDate: date.format('DD.MM.YYYY'),
+      };
+    }),
+  )(reviews);
+};
+
+/**
  * saga to actually hit the api and treat the result
- **/
+ */
 export function* fetchReviewsSaga() {
   while(true) {
     const action = yield take(FETCH_REVIEW);
@@ -67,7 +82,7 @@ export function* fetchReviewsSaga() {
         type: FETCH_REVIEW_DONE,
         response: {
           ...response.data,
-          reviews
+          reviews,
         },
         payload: action
       });
@@ -83,7 +98,7 @@ export function* fetchReviewsSaga() {
 
 /**
  * action to filter reviews
- **/
+ */
 export function filterReviews(filter) {
   return {
     type: FILTER_REVIEWS,
@@ -93,7 +108,7 @@ export function filterReviews(filter) {
 
 /**
  * saga to filter the reviews
- **/
+ */
 export function* filterReviewsSaga() {
   while(true) {
     const action = yield take(FILTER_REVIEWS);
@@ -101,30 +116,22 @@ export function* filterReviewsSaga() {
     const currentState = yield select();
     let reviews = _.getOr([], 'review.reviews', currentState);
 
-    //filter
+    // filter
     if (searchObject.search) {
-      reviews = reviews.filter(review => {
-        return review.content.toLowerCase().indexOf(searchObject.search.toLowerCase()) > -1 ||
-          review.title.toLowerCase().indexOf(searchObject.search.toLowerCase()) > -1;
-      });
+      reviews = reviews.filter(review => review.content.toLowerCase().indexOf(searchObject.search.toLowerCase()) > -1 ||
+          review.title.toLowerCase().indexOf(searchObject.search.toLowerCase()) > -1);
     }
 
-    //filter rate
+    // filter rate
     if (searchObject.rate) {
-      reviews = reviews.filter(review => {
-        return review.stars <= searchObject.rate;
-      });
+      reviews = reviews.filter(review => review.stars <= parseInt(searchObject.rate, 10));
     }
 
-    //order by
+    // order by
     if (searchObject.order_by === SORT_BY_DESC) {
-      reviews = reviews.sort((a, b) => {
-        return new Date(b.created/1000) - new Date(a.created/1000);
-      });
+      reviews = reviews.sort((a, b) => new Date(b.created/1000) - new Date(a.created/1000));
     } else {
-      reviews = reviews.sort((a, b) => {
-        return new Date(a.created/1000) - new Date(b.created/1000);
-      });
+      reviews = reviews.sort((a, b) => new Date(a.created/1000) - new Date(b.created/1000));
     }
 
     yield put({
@@ -133,18 +140,3 @@ export function* filterReviewsSaga() {
     });
   }
 };
-
-/**
- * parse review, including new fields to be used on group by
- **/
-export function parseReview(reviews) {
-  return _.flow(
-    _.map(review => {
-      const date = moment.unix(review.created/1000);
-      return {
-        ...review,
-        formatDate: date.format('DD.MM.YYYY'),
-      };
-    }),
-  )(reviews);
-}

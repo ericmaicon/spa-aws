@@ -1,18 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { compose, lifecycle, withHandlers, setPropTypes } from 'recompose';
+import { compose, lifecycle, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
 
-import ReviewListForm from './components/ReviewListForm';
 import { fetchReviews } from 'features/review/review';
+import ReviewListForm from './components/ReviewListForm';
 
-const mapStateToProps = (state) => {
-  return {
-    reviews: state.review.reviews,
-    hasMore: state.review.hasMore,
-    page: state.review.page
-  };
-};
+const mapStateToProps = (state) => ({
+  parsedReviews: state.review.parsedReviews,
+  hasMore: state.review.hasMore,
+  page: state.review.page
+});
 
 const mapDispatchToProps = {
   fetchReviews
@@ -21,11 +17,11 @@ const mapDispatchToProps = {
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withHandlers({
-    handleOnScroll: ({ fetchReviews, hasMore, page }) => () => {
-      var scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-      var scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
-      var clientHeight = document.documentElement.clientHeight || window.innerHeight;
-      var scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+    handleOnScroll: ({ fetchReviews, hasMore, page }) => () => { // eslint-disable-line no-shadow
+      const scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+      const scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+      const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+      const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
       if (scrolledToBottom && hasMore) {
         fetchReviews(page+1);
@@ -33,18 +29,15 @@ export default compose(
     }
   }),
   lifecycle({
-    componentDidMount: function componentDidMount() {
-      const { fetchReviews, handleOnScroll } = this.props;
+    componentDidMount() {
+      const { fetchReviews, handleOnScroll } = this.props; // eslint-disable-line no-shadow
       fetchReviews();
 
       window.addEventListener('scroll', handleOnScroll);
     },
-    componentWillUnmount: function() {
+    componentWillUnmount() {
       const { handleOnScroll } = this.props;
       window.removeEventListener('scroll', handleOnScroll);
     },
-  }),
-  setPropTypes({
-    reviews: PropTypes.array.isRequired,
   }),
 )(ReviewListForm);

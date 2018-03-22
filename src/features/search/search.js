@@ -11,3 +11,5 @@ export const sortArray = [
     label: 'DESC'
   }
 ];
+
+export default sortArray;

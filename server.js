@@ -1,3 +1,4 @@
+/* eslint-disable */
 var path = require('path');
 var express = require('express');
 var request = require('request');
@@ -11,7 +12,7 @@ app.get('/', function (req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  
+
   request({
     url: `https://sellics-frontend-test.herokuapp.com/reviews/${page}`,
     method: 'get'

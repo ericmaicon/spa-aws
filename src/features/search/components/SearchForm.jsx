@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Form, Row, Col, Button } from 'antd';
 import { Field } from 'redux-form';
 
 import SearchInput from 'forms/SearchInput';
 import SelectInput from 'forms/SelectInput';
 import RateInput from 'forms/RateInput';
-import { groupArray, sortArray } from '../search';
+import { sortArray } from '../search';
 
 const FormItem = Form.Item;
 
@@ -31,7 +32,7 @@ const SearchForm = ({
           />
         </FormItem>
         <FormItem>
-          <label>Filter by:</label>
+          <span>Filter by:</span>
           <Field
             name='rate'
             component={RateInput}
@@ -49,5 +50,10 @@ const SearchForm = ({
     </Col>
   </Row>
 );
+
+SearchForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+};
+
 
 export default SearchForm;

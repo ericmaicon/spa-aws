@@ -1,7 +1,7 @@
 import axios from 'axios';
-import React from 'react';
 import MockAdapter from 'axios-mock-adapter';
 import { expectSaga } from 'redux-saga-test-plan';
+import expect from 'expect';
 
 import {
   fetchReviews,
@@ -10,10 +10,8 @@ import {
   filterReviewsSaga,
   FETCH_REVIEW,
   FETCH_REVIEW_DONE,
-  FILTER_REVIEWS,
   FILTER_REVIEWS_DONE,
-  parseReview,
-  groupBy
+  parseReview
 } from './review';
 
 const mock = new MockAdapter(axios);
@@ -37,15 +35,14 @@ describe('review', () => {
       .run();
   });
 
-  it('test filterReviews', async () => {
-    return expectSaga(filterReviewsSaga)
-      .put({
-        type: FILTER_REVIEWS_DONE,
-        response: []
-      })
-      .dispatch(filterReviews())
-      .run();
-  });
+  it('test filterReviews', async () => expectSaga(filterReviewsSaga)
+    .put({
+      type: FILTER_REVIEWS_DONE,
+      response: []
+    })
+    .dispatch(filterReviews())
+    .run()
+  );
 
   it('should parse reviews', () => {
     const reviews = [{
