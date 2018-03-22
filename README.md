@@ -47,5 +47,5 @@ yarn test
 ## Lint:
 
 ~~~sh
-yarn eslint
+yarn lint
 ~~~
