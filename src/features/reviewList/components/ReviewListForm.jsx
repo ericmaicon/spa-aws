@@ -32,6 +32,10 @@ const ReviewListForm = ({
           {hasMore && showLoader && (
             <Icon type="loading" />
           )}
+
+          {!hasMore && (
+            <Icon type="minus" />
+          )}
         </div>
       </Col>
     </Row>
